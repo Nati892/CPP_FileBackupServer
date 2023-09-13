@@ -13,7 +13,7 @@ SocketHandler::~SocketHandler()
 
 bool SocketHandler::Rec(char** buffer, size_t* len)
 {
-	char data[BUFFER_SIZE];
+	char* data = (char*)malloc(BUFFER_SIZE);
 	memset(data, 0, BUFFER_SIZE);//Set the buffer to 0's
 	boost::system::error_code error;
 	try {
@@ -28,6 +28,7 @@ bool SocketHandler::Rec(char** buffer, size_t* len)
 			else
 			{
 				free(data);
+				data = nullptr;
 			}
 			std::cout << "Connection closed by client" << std::endl;
 			return false;
@@ -42,8 +43,10 @@ bool SocketHandler::Rec(char** buffer, size_t* len)
 			else
 			{
 				free(data);
+				data = nullptr;
 			}
 			free(data);
+			data = nullptr;
 			return false;
 		}
 		if (bytesRead > 0)
@@ -54,6 +57,7 @@ bool SocketHandler::Rec(char** buffer, size_t* len)
 		else
 		{
 			free(data);
+			data = nullptr;
 		}
 		return true;
 	}

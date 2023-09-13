@@ -9,7 +9,7 @@ void Server::ServerInit(int port) {
 		acceptor->listen();
 	}
 	catch (const std::exception& e) {
-		std::cerr << "Error:starting server " << e.what() << "\n";
+		std::cerr << "Error:starting server failed - " << e.what() << "\n";
 		throw e; // Rethrow the exception for error handling in main()
 	}
 }
@@ -47,8 +47,10 @@ void Server::HandleClient(tcp::socket* socket)
 		// Read data from the client
 		char** data = nullptr;
 		size_t data_len = 0;
+		int BytesConsumed = 0;
 		soc_handler.Rec(data, &data_len);
-		int len_handled = GetRequestHeader(*data, data_len, reqHeader);
+
+		bool continueRead = GetRequestHeader(*data, data_len, reqHeader, &BytesConsumed);
 	}
 
 	socket->cancel();

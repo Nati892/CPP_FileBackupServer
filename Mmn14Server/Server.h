@@ -13,7 +13,6 @@ public:
 	void ServerRun();
 private:
 	void HandleClient(tcp::socket* soc);
-	bool ProcessRequest(size_t length, char* data);
 	boost::asio::io_context io_context;
 	tcp::acceptor* acceptor;
 };

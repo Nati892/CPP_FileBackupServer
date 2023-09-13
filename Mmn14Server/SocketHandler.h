@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 #include <boost/asio.hpp> 
-#define BUFFER_SIZE 1024
+#define BUFFER_SIZE 2048
 
 class SocketHandler
 {
